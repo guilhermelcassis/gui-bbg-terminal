@@ -1,1 +1,1 @@
-web: gunicorn stock_analysis.wsgi --bind 0.0.0.0:10000 
+web: gunicorn stock_analysis.wsgi --bind 0.0.0.0:10000 --log-level debug --error-logfile - --access-logfile - 

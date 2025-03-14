@@ -2,11 +2,19 @@
 # Exit on error
 set -o errexit
 
-# Install dependencies
+echo "Installing dependencies..."
 pip install -r requirements.txt
 
-# Collect static files
+echo "Upgrading pip..."
+pip install --upgrade pip
+
+echo "Collecting static files..."
 python manage.py collectstatic --no-input
 
-# Apply database migrations
-python manage.py migrate 
+echo "Applying database migrations..."
+python manage.py migrate
+
+echo "Checking deployment readiness..."
+python manage.py check --deploy
+
+echo "Build completed successfully!" 

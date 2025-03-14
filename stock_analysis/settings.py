@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t)uc5m(e2_@yxo6e-o@h3p01y7g4kdo%d1_3mk%aecksi4o0_8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Set DEBUG based on environment - default to False for security
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+# Enable debug for render.com deployment troubleshooting - will turn off later
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',  # Allow localhost for local development
@@ -33,11 +33,33 @@ ALLOWED_HOSTS = [
     'gui-bbg-terminal.onrender.com',  # Add your Render domain here
     'stock-analysis.onrender.com',    # Default Render subdomain
     '.onrender.com',                  # Allow all Render subdomains
-    # ... other allowed hosts ...
+    '*',                              # Allow all hosts during debugging
 ]
 
-# Get the PORT from environment variable with a default of 8000
+# Get the PORT from environment variable with a default of 10000
 PORT = int(os.environ.get('PORT', 10000))
+
+# Configure Django logging to help debug 500 errors
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
 
 
 # Application definition
@@ -131,20 +153,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# This production code might be better for Render deployment
-if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+# Simplified static files configuration
 # Make sure the static directory exists
 os.makedirs(os.path.join(BASE_DIR, 'static'), exist_ok=True)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# Configure WhiteNoise for static file serving
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
