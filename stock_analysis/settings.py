@@ -31,8 +31,13 @@ ALLOWED_HOSTS = [
     'localhost',  # Allow localhost for local development
     '127.0.0.1',  # Allow local IP
     'gui-bbg-terminal.onrender.com',  # Add your Render domain here
+    'stock-analysis.onrender.com',    # Default Render subdomain
+    '.onrender.com',                  # Allow all Render subdomains
     # ... other allowed hosts ...
 ]
+
+# Get the PORT from environment variable with a default of 8000
+PORT = int(os.environ.get('PORT', 8000))
 
 
 # Application definition

@@ -1,1 +1,1 @@
-web: gunicorn stock_analysis.wsgi 
+web: gunicorn stock_analysis.wsgi --bind 0.0.0.0:$PORT 

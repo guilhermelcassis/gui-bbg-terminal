@@ -4,9 +4,11 @@ services:
     name: stock-analysis
     env: python
     buildCommand: ./build.sh
-    startCommand: gunicorn stock_analysis.wsgi:application
+    startCommand: gunicorn stock_analysis.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DEBUG
         value: "False"
       - key: PYTHON_VERSION
-        value: 3.11.11 
+        value: 3.11.11
+      - key: PORT
+        value: 8000 
