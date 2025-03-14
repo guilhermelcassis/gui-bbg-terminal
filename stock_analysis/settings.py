@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-t)uc5m(e2_@yxo6e-o@h3p01y7g4kdo%d1_3mk%aecksi4o0_8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',  # Allow localhost for local development
+    '127.0.0.1',  # Allow local IP
+    'gui-bbg-terminal.onrender.com',  # Add your Render domain here
+    # ... other allowed hosts ...
+]
 
 
 # Application definition
