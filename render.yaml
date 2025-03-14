@@ -1,0 +1,12 @@
+services:
+  # A web service
+  - type: web
+    name: stock-analysis
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn stock_analysis.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: 3.11.11 
